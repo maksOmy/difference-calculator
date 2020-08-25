@@ -2,9 +2,13 @@ import path from 'path';
 import fs from 'fs';
 import _ from 'lodash';
 
+
+
 const gendiff = (filepath1, filepath2) => {
-  const firstFile = JSON.parse(fs.readFileSync(path.resolve(filepath1)));
-  const secondFile = JSON.parse(fs.readFileSync(path.resolve(filepath2)));
+  const readFile1 = fs.readFileSync(path.resolve(filepath1));
+  const readFile2 = fs.readFileSync(path.resolve(filepath2));
+  const firstFile = JSON.parse(readFile1);
+  const secondFile = JSON.parse(readFile2);
 
   const allKeys = [];
   const firstFileKeys = Object.keys(firstFile);
@@ -26,7 +30,7 @@ const gendiff = (filepath1, filepath2) => {
     if (item.type === 'equal') return `   ${item.key}: ${firstFile[item.key]}\n`;
     if (item.type === 'modified') return `- ${item.key}: ${firstFile[item.key]}\n + ${item.key}: ${secondFile[item.key]}\n`;
     if (item.type === 'add') return `+ ${item.key}: ${secondFile[item.key]}\n`;
-    
+
     return `- ${item.key}: ${firstFile[item.key]}\n`;
   });
 
