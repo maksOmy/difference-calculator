@@ -27,8 +27,6 @@ const gendiff = (filepath1, filepath2) => {
     if (firstFileKeys.includes(item) || !secondFileKeys.includes(item)) {
       return { key: item, type: 'delete' };
     }
-
-    return false;
   });
 
   const diff = result.map((item) => {
@@ -44,7 +42,6 @@ const gendiff = (filepath1, filepath2) => {
     if (item.type === 'add') {
       return `+ ${item.key}: ${secondFile[item.key]}\n`;
     }
-    return false;
   });
 
   return `{\n${_.join(diff, ' ')}}`;
