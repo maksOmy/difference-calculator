@@ -1,7 +1,7 @@
 {
-  "name": "@maksomy/gendiff",
+  "name": "@maks.a/gendiff",
   "version": "1.0.0",
-  "description": "",
+  "description": "gen difference between too files in json format",
   "main": "dist/index.js",
   "scripts": {
     "build": "NODE_ENV=production babel src --out-dir dist",
@@ -17,7 +17,10 @@
   "files": [
     "dist"
   ],
-  "author": "",
+  "publishConfig": {
+    "access": "public"
+  },
+  "author": "https://github.com/maksOmy",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/maksOmy/frontend-project-lvl2/issues"
