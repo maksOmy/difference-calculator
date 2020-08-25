@@ -2,8 +2,6 @@ import path from 'path';
 import fs from 'fs';
 import _ from 'lodash';
 
-
-
 const gendiff = (filepath1, filepath2) => {
   const readFile1 = fs.readFileSync(path.resolve(filepath1));
   const readFile2 = fs.readFileSync(path.resolve(filepath2));

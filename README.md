@@ -1,4 +1,5 @@
-<a href="https://codeclimate.com/github/maksOmy/frontend-project-lvl2/maintainability"><img src="https://api.codeclimate.com/v1/badges/e8790dcda6e9b050b28a/maintainability" /></a> <a href="https://codeclimate.com/github/maksOmy/frontend-project-lvl2/test_coverage"><img src="https://api.codeclimate.com/v1/badges/e8790dcda6e9b050b28a/test_coverage" /></a>
+<a href="https://codeclimate.com/github/maksOmy/frontend-project-lvl2/maintainability"><img src="https://api.codeclimate.com/v1/badges/e8790dcda6e9b050b28a/maintainability" /></a> <a href="https://codeclimate.com/github/maksOmy/frontend-project-lvl2/test_coverage"><img src="https://api.codeclimate.com/v1/badges/e8790dcda6e9b050b28a/test_coverage" /></a> <a href="https://github.com/maksOmy/frontend-project-lvl2/actions"><img src="https://github.com/maksOmy/frontend-project-lvl2/workflows/Run%20ESLint%20on%20Pull%20Requests/badge.svg" /></a>
+
 
 <p>Вычислитель отличий – программа определяющая разницу между двумя структурами данных.</p>
 <p>Возможности утилиты:</p>
