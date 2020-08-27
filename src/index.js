@@ -1,10 +1,10 @@
-import path from 'path';
-import fs from 'fs';
 import _ from 'lodash';
+import reader from '../utils/reader';
 
 const gendiff = (filepath1, filepath2) => {
-  const readFile1 = fs.readFileSync(path.resolve(filepath1));
-  const readFile2 = fs.readFileSync(path.resolve(filepath2));
+  const readFile1 = reader(filepath1);
+  const readFile2 = reader(filepath2);
+
   const firstFile = JSON.parse(readFile1);
   const secondFile = JSON.parse(readFile2);
 
