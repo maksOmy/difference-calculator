@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import reader from '../utils/reader';
+import reader from '../utils/reader.js';
 
 const gendiff = (filepath1, filepath2) => {
   const readFile1 = reader(filepath1);

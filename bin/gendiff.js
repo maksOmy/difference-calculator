@@ -1,10 +1,8 @@
-#!/usr/bin/env babel-node
-import gendiff from '../src/index';
+#!/usr/bin/env node
+import commander from 'commander';
+import gendiff from '../src/index.js';
 
-const { Command } = require('commander');
-
-const program = new Command();
-program
+commander
   .version('1.0.0', '-v, --version', 'output the version number')
   .option('-f, --format [type]', 'output format')
   .helpOption('-h --help', 'output usage information')
@@ -15,4 +13,4 @@ program
     console.log(gendiff(filepath1, filepath2));
   });
 
-program.parse(process.argv);
+commander.parse(process.argv);

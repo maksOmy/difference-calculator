@@ -2,23 +2,22 @@
   "name": "@maks.a/gendiff",
   "version": "1.0.0",
   "description": "gen difference between too files in json format",
-  "main": "dist/index.js",
-  "scripts": {
-    "build": "NODE_ENV=production babel src --out-dir dist",
-    "prepublishOnly": "npm run build"
-  },
+  "main": "src/index.js",
+  "scripts": {},
   "bin": {
     "gendiff": "bin/gendiff.js"
   },
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/maksOmy/frontend-project-lvl2.git"
   },
-  "files": [
-    "dist"
-  ],
   "publishConfig": {
     "access": "public"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "transform": {}
   },
   "author": "https://github.com/maksOmy",
   "license": "ISC",
@@ -27,18 +26,11 @@
   },
   "homepage": "https://github.com/maksOmy/frontend-project-lvl2#readme",
   "dependencies": {
-    "babel": "^6.23.0",
-    "babel-node": "0.0.1-security",
     "commander": "^6.0.0",
     "lodash": "^4.17.20",
     "node": "^14.8.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.10.5",
-    "@babel/core": "^7.11.4",
-    "@babel/node": "^7.10.5",
-    "@babel/preset-env": "^7.11.0",
-    "babel-jest": "^26.3.0",
     "eslint": "^7.7.0",
     "eslint-config-airbnb-base": "^14.2.0",
     "eslint-plugin-import": "^2.22.0",
