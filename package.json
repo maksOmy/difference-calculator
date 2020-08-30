@@ -28,13 +28,13 @@
   },
   "homepage": "https://github.com/maksOmy/frontend-project-lvl2#readme",
   "dependencies": {
-    
     "commander": "^6.0.0",
     "debug": "^4.1.1",
     "lodash": "^4.17.20",
     "node": "^14.8.0"
   },
   "devDependencies": {
+    "eslint-plugin-jest": "^23.20.0",
     "@jest/globals": "^26.4.2",
     "jest-cli": "^26.4.2",
     "eslint": "^7.7.0",
