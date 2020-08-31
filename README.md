@@ -12,8 +12,8 @@
 
 <ul>
     <li>Вывод в формате stylish
-        <a href="https://asciinema.org/a/LPfFFOH7quMv5UReLVZyH0w8F" target="_blank">
-            <img src="https://asciinema.org/a/LPfFFOH7quMv5UReLVZyH0w8F.svg" />
+        <a href="https://asciinema.org/a/5b9v7vFbVcYOcsS5wJ0aQE5wt" target="_blank">
+            <img src="https://asciinema.org/a/5b9v7vFbVcYOcsS5wJ0aQE5wt.svg" />
         </a>
     </li>
     <li>Вывод в формате plain</li>    

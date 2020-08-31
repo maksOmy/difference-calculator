@@ -1,12 +1,9 @@
 import _ from 'lodash';
-import reader from '../utils/reader.js';
+import dataParser from '../utils/parsers.js';
 
 const gendiff = (filepath1, filepath2) => {
-  const readFile1 = reader(filepath1);
-  const readFile2 = reader(filepath2);
-
-  const firstFile = JSON.parse(readFile1);
-  const secondFile = JSON.parse(readFile2);
+  const firstFile = dataParser(filepath1);
+  const secondFile = dataParser(filepath2);
 
   const allKeys = [];
   const firstFileKeys = Object.keys(firstFile);
