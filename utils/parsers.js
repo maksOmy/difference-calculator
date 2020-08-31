@@ -8,7 +8,7 @@ const dataParser = (data) => {
   const readFile = reader(data);
 
   let parse;
-  
+
   if (format === '.json') {
     parse = JSON.parse(readFile);
   }

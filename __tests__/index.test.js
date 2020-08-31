@@ -20,4 +20,8 @@ test('gendiff', () => {
   const ymlFile1 = getFixturePath('after.yml');
   const ymlFile2 = getFixturePath('before.yml');
   expect(gendiff(ymlFile1, ymlFile2)).toEqual(expectedResult);
+
+  const iniFile1 = getFixturePath('after.ini');
+  const iniFile2 = getFixturePath('before.ini');
+  expect(gendiff(iniFile1, iniFile2)).toEqual(expectedResult);
 });
