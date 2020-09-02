@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import dataParser from '../utils/parsers.js';
+import addKeysType from '../utils/addKeysType.js';
 
 const gendiff = (filepath1, filepath2) => {
   const firstFile = dataParser(filepath1);
@@ -13,13 +14,7 @@ const gendiff = (filepath1, filepath2) => {
   allKeys.push(secondFileKeys);
   const uniqueAllKeys = _.uniq(allKeys.flat());
 
-  const result = uniqueAllKeys.map((item) => {
-    if (firstFile[item] === secondFile[item]) return { key: item, type: 'equal' };
-    if (firstFileKeys.includes(item) && secondFileKeys.includes(item)) return { key: item, type: 'modified' };
-    if (!firstFileKeys.includes(item) || secondFileKeys.includes(item)) return { key: item, type: 'add' };
-
-    return { key: item, type: 'delete' };
-  });
+  const result = addKeysType(uniqueAllKeys, firstFile, secondFile, firstFileKeys, secondFileKeys);
 
   const diff = result.map((item) => {
     if (item.type === 'equal') return `   ${item.key}: ${firstFile[item.key]}\n`;
@@ -28,7 +23,7 @@ const gendiff = (filepath1, filepath2) => {
 
     return `- ${item.key}: ${firstFile[item.key]}\n`;
   });
-
+  console.log(diff);
   return `{\n${_.join(diff, ' ')}}`;
 };
 
