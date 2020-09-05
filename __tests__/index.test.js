@@ -2,6 +2,7 @@ import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import path from 'path';
 import gendiff from '../src/index.js';
+import reader from '../utils/reader.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -9,7 +10,8 @@ const __dirname = dirname(__filename);
 const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
 
 test('gendiff', () => {
-  const expectedResult = '{\n   host: hexlet.io\n - timeout: 50\n + timeout: 20\n - proxy: 123.234.53.22\n - follow: false\n + verbose: true\n}';
+  const expectedResult = reader('__fixtures__/expectResult.txt');
+  const expectedResultForIni = reader('__fixtures__/expectResultForIni.txt');
 
   const jsonFile1 = getFixturePath('after.json');
   const jsonFile2 = getFixturePath('before.json');
@@ -21,5 +23,5 @@ test('gendiff', () => {
 
   const iniFile1 = getFixturePath('after.ini');
   const iniFile2 = getFixturePath('before.ini');
-  expect(gendiff(iniFile1, iniFile2)).toEqual(expectedResult);
+  expect(gendiff(iniFile1, iniFile2)).toEqual(expectedResultForIni);
 });
