@@ -2,7 +2,7 @@ import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import path from 'path';
 import gendiff from '../src/index.js';
-import reader from '../utils/reader.js';
+import reader from '../src/utils/reader.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);

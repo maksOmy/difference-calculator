@@ -14,27 +14,19 @@ const stylishFormat = (tree) => {
     const formattedTree = data
       .map((node) => {
         const {
-          name,
-          type,
-          value,
-          beforeValue,
-          afterValue,
-          children,
+          name, type, value, beforeValue, afterValue, children,
         } = node;
         switch (type) {
           case 'delete':
             return `${' '.repeat(space)}- ${name}: ${formatValue(value, space + indent)}`;
           case 'add':
             return `${' '.repeat(space)}+ ${name}: ${formatValue(value, space + indent)}`;
-          case 'modified': {
+          case 'modified':
             return `${' '.repeat(space)}- ${name}: ${formatValue(beforeValue, space + indent)}\n${' '.repeat(space)}+ ${name}: ${formatValue(afterValue, space + indent)}`;
-          }
-          case 'unmodified': {
+          case 'unmodified':
             return `${' '.repeat(space)}  ${name}: ${value}`;
-          }
-          case 'nested': {
+          case 'nested':
             return `${' '.repeat(space)}  ${name}: ${iter(children, depth + 1)}`;
-          }
           default:
             return 'invalid type';
         }
