@@ -1,4 +1,4 @@
-const getPathToKey = (tree, needKey) => {
+const getPathToKey = (tree, neededKey) => {
   const iter = (data, path) => {
     const formattedTree = data
       .map((node) => {
@@ -10,7 +10,7 @@ const getPathToKey = (tree, needKey) => {
         return pathToKey;
       });
     const allPath = formattedTree.flat();
-    const pathToKey = allPath.filter((key) => key.endsWith(needKey));
+    const pathToKey = allPath.filter((key) => key.endsWith(neededKey));
 
     return pathToKey.join();
   };

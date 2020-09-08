@@ -16,7 +16,16 @@
             <img src="https://asciinema.org/a/5b9v7vFbVcYOcsS5wJ0aQE5wt.svg" />
         </a>
     </li>
-    <li>Вывод в формате plain</li>    
+    <li>Вывод в формате plain
+        <a href="https://asciinema.org/a/s1urAaaPJsJCzpoE1dFHEeZan" target="_blank">
+            <img src="https://asciinema.org/a/s1urAaaPJsJCzpoE1dFHEeZan.svg" />
+        </a>
+    </li>
+    <li>Вывод в формате json
+        <a href="https://asciinema.org/a/81ntIXed4hmZHeY12z7EAstAE" target="_blank">
+            <img src="https://asciinema.org/a/81ntIXed4hmZHeY12z7EAstAE.svg" />
+        </a>
+    </li>
 </ul>
 
 <h2>программные требования</h2>

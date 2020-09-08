@@ -1,32 +1,24 @@
 import _ from 'lodash';
 
-const buildNode = (name, value, type) => ({
-  name,
-  value,
-  type,
-});
+const buildNode = (name, value, type) => ({ name, value, type });
 
-const addKeysType = (before, after) => {
+const addTypeToKeys = (before, after) => {
   const keys = _.union(Object.keys(before), Object.keys(after)).sort();
   const tree = keys.map((key) => {
     const beforeValue = before[key];
     const afterValue = after[key];
     if (!_.has(before, key)) {
-      return buildNode(key, afterValue, 'add');
+      return buildNode(key, afterValue, 'added');
     }
     if (!_.has(after, key)) {
-      return buildNode(key, beforeValue, 'delete');
+      return buildNode(key, beforeValue, 'deleted');
     }
     if (beforeValue === afterValue) {
       return buildNode(key, beforeValue, 'unmodified');
     }
     if (typeof beforeValue === 'object' && typeof afterValue === 'object') {
-      const children = addKeysType(beforeValue, afterValue);
-      return {
-        name: key,
-        type: 'nested',
-        children,
-      };
+      const children = addTypeToKeys(beforeValue, afterValue);
+      return { name: key, type: 'nested', children };
     }
     return {
       name: key,
@@ -37,4 +29,4 @@ const addKeysType = (before, after) => {
   });
   return tree;
 };
-export default addKeysType;
+export default addTypeToKeys;

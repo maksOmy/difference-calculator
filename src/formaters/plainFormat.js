@@ -15,9 +15,9 @@ const plainFormat = (tree) => {
         }
 
         switch (type) {
-          case 'delete':
+          case 'deleted':
             return `Property ${getPathToKey(tree, name)} was removed`;
-          case 'add':
+          case 'added':
             return `Property ${getPathToKey(tree, name)} was added with value: ${formatValue(value)}`;
           case 'modified':
             return `Property ${getPathToKey(tree, name)} was updated. From ${formatValue(beforeValue)} to ${formatValue(afterValue)}`;

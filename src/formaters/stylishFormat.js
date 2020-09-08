@@ -17,9 +17,9 @@ const stylishFormat = (tree) => {
           name, type, value, beforeValue, afterValue, children,
         } = node;
         switch (type) {
-          case 'delete':
+          case 'deleted':
             return `${' '.repeat(space)}- ${name}: ${formatValue(value, space + indent)}`;
-          case 'add':
+          case 'added':
             return `${' '.repeat(space)}+ ${name}: ${formatValue(value, space + indent)}`;
           case 'modified':
             return `${' '.repeat(space)}- ${name}: ${formatValue(beforeValue, space + indent)}\n${' '.repeat(space)}+ ${name}: ${formatValue(afterValue, space + indent)}`;
