@@ -96,14 +96,14 @@
  {
   "name": "group2",
   "value": {
-   "abc": 12345
+   "abc": "12345"
   },
   "type": "deleted"
  },
  {
   "name": "group3",
   "value": {
-   "fee": 100500
+   "fee": "100500"
   },
   "type": "added"
  }
