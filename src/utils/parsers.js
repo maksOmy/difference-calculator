@@ -1,23 +1,18 @@
-import path from 'path';
 import ini from 'ini';
 import yaml from 'js-yaml';
-import reader from './reader.js';
+import numParser from './numParser.js';
 
-const dataParser = (data) => {
-  const format = path.extname(data);
-  const readFile = reader(data);
-
-  let parse;
-
-  if (format === '.json') {
-    parse = JSON.parse(readFile);
+const dataParser = (data, format) => {
+  if (format === 'json') {
+    return JSON.parse(data);
   }
-  if (format === '.yml') {
-    parse = yaml.safeLoad(readFile);
+  if (format === 'yml') {
+    return yaml.safeLoad(data);
   }
-  if (format === '.ini') {
-    parse = ini.parse(readFile);
+  if (format === 'ini') {
+    const parseDataIni = ini.parse(data);
+    return numParser(parseDataIni);
   }
-  return parse;
+  return 'undefined format';
 };
 export default dataParser;
