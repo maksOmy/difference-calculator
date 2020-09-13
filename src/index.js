@@ -1,32 +1,61 @@
 import path from 'path';
+import _ from 'lodash';
 import dataParser from './utils/parsers.js';
-import addTypeToKeys from './utils/addTypeToKeys.js';
-import stylishFormat from './formaters/stylishFormat.js';
-import plainFormat from './formaters/plainFormat.js';
-import jsonFormat from './formaters/jsonFormat.js';
-import reader from './utils/reader.js';
+import fs from 'fs';
 
-const getExtName = (fileName) => {
+const getFileValues = (file) => {
+  const filePath = path.resolve(file);
+  const readFile = fs.readFileSync(filePath, 'utf-8');
+  return readFile;
+};
+
+
+const addTypeToKeys = (before, after) => {
+  const keys = _.union(Object.keys(before), Object.keys(after)).sort();
+  const tree = keys.map((key) => {
+    const beforeValue = before[key];
+    const afterValue = after[key];
+    if (!_.has(before, key)) {
+      return { name: key, value: afterValue, type: 'added' };
+    }
+    if (!_.has(after, key)) {
+      return { name: key, value: beforeValue, type: 'deleted' };
+    }
+    if (beforeValue === afterValue) {
+      return { name: key, value: beforeValue, type: 'unmodified' };
+    }
+    if (_.isObject(beforeValue) && _.isObject(afterValue)) {
+      const children = addTypeToKeys(beforeValue, afterValue);
+      return { name: key, type: 'nested', children };
+    }
+    return {
+      name: key,
+      type: 'modified',
+      beforeValue,
+      afterValue,
+    };
+  });
+  return tree;
+};
+
+const getFileType = (fileName) => {
   const extNameFile = path.extname(fileName);
   return extNameFile.slice(1, extNameFile.length);
 };
 
-const gendiff = (filepath1, filepath2, format = 'stylish') => {
-  const formatFile1 = getExtName(filepath1);
-  const formatFile2 = getExtName(filepath2);
+const gendiff = (filepath1, filepath2) => {
+  const fileformat1 = getFileType(filepath1);
+  const fileformat2 = getFileType(filepath2);
 
-  const readFile1 = reader(filepath1);
-  const readFile2 = reader(filepath2);
+  const readFile1 = getFileValues(filepath1);
+  const readFile2 = getFileValues(filepath2);
 
-  const firstFileValue = dataParser(readFile1, formatFile1);
-  const secondFileValue = dataParser(readFile2, formatFile2);
+  const fileValues1 = dataParser(readFile1, fileformat1);
+  const fileValues2 = dataParser(readFile2, fileformat2);
 
-  const keysWithType = addTypeToKeys(firstFileValue, secondFileValue);
+  const keysWithType = addTypeToKeys(fileValues1, fileValues2);
 
-  if (format === 'json') {
-    return jsonFormat(keysWithType);
-  }
-  return format === 'plain' ? plainFormat(keysWithType) : stylishFormat(keysWithType);
+  return keysWithType;
 };
 
 export default gendiff;

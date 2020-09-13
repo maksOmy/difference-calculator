@@ -1,24 +1,18 @@
 #!/usr/bin/env node
 import commander from 'commander';
-import gendiff from '../src/index.js';
+import getFormatDiff from '../src/formatters/index.js';
 
 const { program } = commander.program;
 
 program
   .version('1.0.0', '-v, --version', 'output the version number')
-  .option('-f, --format [type]', 'output format', 'stylish', gendiff)
+  .option('-f, --format [type]', 'output format', 'stylish', getFormatDiff)
   .helpOption('-h --help', 'output usage information')
   .arguments('<filepath1> <filepath2>')
   .description('Compares two configuration files and shows a difference.')
 
-  .action((filepath1, filepath2) => {
-    if (commander.format === 'plain') {
-      console.log(gendiff(filepath1, filepath2, 'plain'));
-    } else if (commander.format === 'json') {
-      console.log(gendiff(filepath1, filepath2, 'json'));
-    } else {
-      console.log(gendiff(filepath1, filepath2));
-    }
+  .action((filepath1, filepath2) => {    
+      console.log(getFormatDiff(filepath1, filepath2, commander.format));    
   });
 
 commander.parse(process.argv);
