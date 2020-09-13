@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 const getPathToKey = (tree, neededKey) => {
   const iter = (data, path) => {
     const formattedTree = data
@@ -18,7 +20,7 @@ const getPathToKey = (tree, neededKey) => {
   return iter(tree, '');
 };
 
-const formatValue = (value) => (typeof value === 'object' ? '[complex value]' : value);
+const formatValue = (value) => (_.isObject(value) ? '[complex value]' : value);
 
 const plainFormat = (tree) => {
   const iter = (data) => {
@@ -44,7 +46,7 @@ const plainFormat = (tree) => {
           case 'nested':
             return `Property ${getPathToKey(tree, name)}: ${iter(children)}`;
           default:
-            return 'invalid type';
+            throw new Error('unexpected type');
         }
       });
     return `${formattedTree.join('\n')}`;

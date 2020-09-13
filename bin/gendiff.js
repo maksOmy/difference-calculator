@@ -11,8 +11,8 @@ program
   .arguments('<filepath1> <filepath2>')
   .description('Compares two configuration files and shows a difference.')
 
-  .action((filepath1, filepath2) => {    
-      console.log(getFormatDiff(filepath1, filepath2, commander.format));    
+  .action((filepath1, filepath2) => {
+    console.log(getFormatDiff(filepath1, filepath2, commander.format));
   });
 
 commander.parse(process.argv);

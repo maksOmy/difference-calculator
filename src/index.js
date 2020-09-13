@@ -1,24 +1,22 @@
 import path from 'path';
-import _ from 'lodash';
-import dataParser from './utils/parsers.js';
 import fs from 'fs';
+import _ from 'lodash';
+import dataParser from './parsers.js';
 
-const getFileValues = (file) => {
-  const filePath = path.resolve(file);
+const getFileValues = (filePath) => {
   const readFile = fs.readFileSync(filePath, 'utf-8');
   return readFile;
 };
 
-
-const addTypeToKeys = (before, after) => {
-  const keys = _.union(Object.keys(before), Object.keys(after)).sort();
+const addTypeToKeys = (file1Values, file2Values) => {
+  const keys = _.union(Object.keys(file1Values), Object.keys(file2Values)).sort();
   const tree = keys.map((key) => {
-    const beforeValue = before[key];
-    const afterValue = after[key];
-    if (!_.has(before, key)) {
+    const beforeValue = file1Values[key];
+    const afterValue = file2Values[key];
+    if (!_.has(file1Values, key)) {
       return { name: key, value: afterValue, type: 'added' };
     }
-    if (!_.has(after, key)) {
+    if (!_.has(file2Values, key)) {
       return { name: key, value: beforeValue, type: 'deleted' };
     }
     if (beforeValue === afterValue) {
