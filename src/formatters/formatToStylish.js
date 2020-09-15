@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 const formatObj = (obj, space) => {
   const increaseSpace = 4;
   const formattedObj = Object.entries(obj)
@@ -5,16 +7,16 @@ const formatObj = (obj, space) => {
   return `{\n${formattedObj.join('\n')}${' '.repeat(space)}}`;
 };
 
-const formatValue = (value, space) => (typeof value === 'object' ? formatObj(value, space) : value);
+const formatValue = (value, space) => (_.isObject(value) ? formatObj(value, space) : value);
 
-const stylishFormat = (tree) => {
+const formatToStylish = (tree) => {
   const iter = (data, depth) => {
     const indent = 2;
     const space = depth === 1 ? depth * indent : depth * indent + indent;
     const formattedTree = data
       .map((node) => {
         const {
-          name, type, value, beforeValue, afterValue, children,
+          name, type, value, oldValue, newValue, children,
         } = node;
         switch (type) {
           case 'deleted':
@@ -22,13 +24,13 @@ const stylishFormat = (tree) => {
           case 'added':
             return `${' '.repeat(space)}+ ${name}: ${formatValue(value, space + indent)}`;
           case 'modified':
-            return `${' '.repeat(space)}- ${name}: ${formatValue(beforeValue, space + indent)}\n${' '.repeat(space)}+ ${name}: ${formatValue(afterValue, space + indent)}`;
+            return `${' '.repeat(space)}- ${name}: ${formatValue(oldValue, space + indent)}\n${' '.repeat(space)}+ ${name}: ${formatValue(newValue, space + indent)}`;
           case 'unmodified':
             return `${' '.repeat(space)}  ${name}: ${value}`;
           case 'nested':
             return `${' '.repeat(space)}  ${name}: ${iter(children, depth + 1)}`;
           default:
-            return 'invalid type';
+            throw new Error(`unexpected type: ${type}`);
         }
       });
     return `{\n${formattedTree.join('\n')}\n${' '.repeat(space - indent)}}`;
@@ -36,4 +38,4 @@ const stylishFormat = (tree) => {
   return iter(tree, 1);
 };
 
-export default stylishFormat;
+export default formatToStylish;

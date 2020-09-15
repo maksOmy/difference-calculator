@@ -1,12 +1,12 @@
 import { fileURLToPath } from 'url';
 import path, { dirname } from 'path';
 import fs from 'fs';
-import getFormatDiff from '../src/formatters/index.js';
+import genDiff from '../src/index.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const getFileValues = (fileName) => fs.readFileSync(fileName, 'utf-8');
+const readFile = (fileName) => fs.readFileSync(fileName, 'utf-8');
 
 const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
 
@@ -19,9 +19,9 @@ const ymlFilePath2 = getFixturePath('before.yml');
 const iniFilePath1 = getFixturePath('after.ini');
 const iniFilePath2 = getFixturePath('before.ini');
 
-const stylishExpected = getFileValues('__fixtures__/stylishResult.txt');
-const plainExpected = getFileValues('__fixtures__/plainResult.txt');
-const jsonExpected = getFileValues('__fixtures__/jsonResult.txt');
+const stylishExpected = readFile('__fixtures__/stylishResult.txt');
+const plainExpected = readFile('__fixtures__/plainResult.txt');
+const jsonExpected = readFile('__fixtures__/jsonResult.txt');
 const expectForAllFormats = [stylishExpected, plainExpected, jsonExpected];
 
 test.each([
@@ -29,7 +29,7 @@ test.each([
   [ymlFilePath1, ymlFilePath2, expectForAllFormats],
   [iniFilePath1, iniFilePath2, expectForAllFormats],
 ])('allFormatDiff %#', (a, b, expected) => {
-  expect(getFormatDiff(a, b)).toEqual(expected[0]);
-  expect(getFormatDiff(a, b, 'plain')).toEqual(expected[1]);
-  expect(getFormatDiff(a, b, 'json')).toEqual(expected[2]);
+  expect(genDiff(a, b)).toEqual(expected[0]);
+  expect(genDiff(a, b, 'plain')).toEqual(expected[1]);
+  expect(genDiff(a, b, 'json')).toEqual(expected[2]);
 });

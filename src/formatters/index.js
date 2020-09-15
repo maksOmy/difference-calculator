@@ -1,18 +1,18 @@
-import stylishFormat from './stylishFormat.js';
-import formatToJson from './formatToJson.js';
-import plainFormat from './plainFormat.js';
-import gendiff from '../index.js';
+import formatToStylish from './formatToStylish.js';
+import formatToPlain from './formatToPlain.js';
 
-const getFormatDiff = (filePath1, filePath2, format = 'stylish') => {
-  const diff = gendiff(filePath1, filePath2);
+const formatToJson = (tree) => JSON.stringify(tree);
 
+const getFormatDiff = (diff, format) => {
   switch (format) {
     case 'plain':
-      return plainFormat(diff);
+      return formatToPlain(diff);
     case 'json':
       return formatToJson(diff);
+    case 'stylish':
+      return formatToStylish(diff);
     default:
-      return stylishFormat(diff);
+      throw new Error(`unexpected format: ${format}`);
   }
 };
 

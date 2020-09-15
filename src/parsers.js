@@ -21,11 +21,13 @@ const dataParser = (data, format) => {
     case 'yml':
       return yaml.safeLoad(data);
     case 'ini': {
-      const parseDataIni = ini.parse(data);
-      return numParser(parseDataIni);
+      const parsedData = ini.parse(data);
+      return numParser(parsedData);
     }
-    default:
+    case 'json':
       return JSON.parse(data);
+    default:
+      throw new Error(`unexpected type: ${format}`);
   }
 };
 export default dataParser;
