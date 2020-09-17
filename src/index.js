@@ -4,7 +4,7 @@ import _ from 'lodash';
 import dataParser from './parsers.js';
 import getFormatDiff from './formatters/index.js';
 
-const readFile = (path) => fs.readFileSync(path).toString();
+const readFile = (filePath) => fs.readFileSync(filePath).toString();
 
 const buildDiff = (file1Values, file2Values) => {
   const keys = _.union(_.keys(file1Values), _.keys(file2Values)).sort();
@@ -38,8 +38,8 @@ const gendiff = (filepath1, filepath2, format = 'stylish') => {
   const readFile1 = readFile(filepath1);
   const fileValues1 = dataParser(readFile1, fileformat1);
 
-  const fileformat2 = getFileType(filepath2); 
-  const readFile2 = readFile(filepath2);  
+  const fileformat2 = getFileType(filepath2);
+  const readFile2 = readFile(filepath2);
   const fileValues2 = dataParser(readFile2, fileformat2);
 
   const diff = buildDiff(fileValues1, fileValues2);

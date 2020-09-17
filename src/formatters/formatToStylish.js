@@ -7,6 +7,8 @@ const formatObj = (obj, space) => {
   return `{\n${formattedObj.join('\n')}${' '.repeat(space)}}`;
 };
 
+const addPrefix = (indent, symbol = '', prefix = '') => `${' '.repeat(indent)}${symbol}${prefix}`;
+
 const formatValue = (value, space) => (_.isObject(value) ? formatObj(value, space) : value);
 
 const formatToStylish = (tree) => {
@@ -20,15 +22,15 @@ const formatToStylish = (tree) => {
         } = node;
         switch (type) {
           case 'deleted':
-            return `${' '.repeat(space)}- ${name}: ${formatValue(value, space + indent)}`;
+            return `${addPrefix(space, '-')} ${name}: ${formatValue(value, space + indent)}`;
           case 'added':
-            return `${' '.repeat(space)}+ ${name}: ${formatValue(value, space + indent)}`;
+            return `${addPrefix(space, '+')} ${name}: ${formatValue(value, space + indent)}`;
           case 'modified':
-            return `${' '.repeat(space)}- ${name}: ${formatValue(oldValue, space + indent)}\n${' '.repeat(space)}+ ${name}: ${formatValue(newValue, space + indent)}`;
+            return `${addPrefix(space, '-')} ${name}: ${formatValue(oldValue, space + indent)}\n${addPrefix(space, '+')} ${name}: ${formatValue(newValue, space + indent)}`;
           case 'unmodified':
-            return `${' '.repeat(space)}  ${name}: ${value}`;
+            return `${addPrefix(space)}  ${name}: ${formatValue(value, space + indent)}`;
           case 'nested':
-            return `${' '.repeat(space)}  ${name}: ${iter(children, depth + 1)}`;
+            return `${addPrefix(space)}  ${name}: ${iter(children, depth + 1)}`;
           default:
             throw new Error(`unexpected type: ${type}`);
         }

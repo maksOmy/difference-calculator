@@ -22,14 +22,13 @@ const iniFilePath2 = getFixturePath('before.ini');
 const stylishExpected = readFile('__fixtures__/stylishResult.txt');
 const plainExpected = readFile('__fixtures__/plainResult.txt');
 const jsonExpected = readFile('__fixtures__/jsonResult.txt');
-const expectForAllFormats = [stylishExpected, plainExpected, jsonExpected];
 
 test.each([
-  [jsonFilePath1, jsonFilePath2, expectForAllFormats],
-  [ymlFilePath1, ymlFilePath2, expectForAllFormats],
-  [iniFilePath1, iniFilePath2, expectForAllFormats],
-])('allFormatDiff %#', (a, b, expected) => {
-  expect(genDiff(a, b)).toEqual(expected[0]);
-  expect(genDiff(a, b, 'plain')).toEqual(expected[1]);
-  expect(genDiff(a, b, 'json')).toEqual(expected[2]);
+  ['json', jsonExpected],
+  ['plain', plainExpected],
+  ['stylish', stylishExpected],
+])('allFormatDiff %#', (format, expected) => {
+  expect(genDiff(jsonFilePath1, jsonFilePath2, format)).toEqual(expected);
+  expect(genDiff(ymlFilePath1, ymlFilePath2, format)).toEqual(expected);
+  expect(genDiff(iniFilePath1, iniFilePath2, format)).toEqual(expected);
 });
