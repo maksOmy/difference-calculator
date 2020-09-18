@@ -2,11 +2,9 @@
 import commander from 'commander';
 import genDiff from '../src/index.js';
 
-const { program } = commander.program;
-
-program
+commander
   .version('1.0.0', '-v, --version', 'output the version number')
-  .option('-f, --format [type]', 'output format', 'stylish', genDiff)
+  .option('-f, --format [type: stylish, plain, json]', 'output format', 'stylish')
   .helpOption('-h --help', 'output usage information')
   .arguments('<filepath1> <filepath2>')
   .description('Compares two configuration files and shows a difference.')

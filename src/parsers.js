@@ -2,21 +2,21 @@ import ini from 'ini';
 import yaml from 'js-yaml';
 import _ from 'lodash';
 
-const numParser = (obj) => {
+const parsedToNum = (obj) => {
   const buildTree = _.mapValues(obj, (value) => {
-    const parseNum = Number.isNaN(parseInt(value, 10)) ? value : parseInt(value, 10);
-    return _.isObject(value) ? numParser(value) : parseNum;
+    const numParse = Number.isNaN(parseFloat(value)) ? value : parseFloat(value);
+    return _.isObject(value) ? parsedToNum(value) : numParse;
   });
   return buildTree;
 };
 
-const dataParser = (data, format) => {
+const parse = (data, format) => {
   switch (format) {
     case 'yml':
       return yaml.safeLoad(data);
     case 'ini': {
       const parsedData = ini.parse(data);
-      return numParser(parsedData);
+      return parsedToNum(parsedData);
     }
     case 'json':
       return JSON.parse(data);
@@ -24,4 +24,4 @@ const dataParser = (data, format) => {
       throw new Error(`unexpected type: ${format}`);
   }
 };
-export default dataParser;
+export default parse;

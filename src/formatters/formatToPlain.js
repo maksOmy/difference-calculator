@@ -10,7 +10,7 @@ const formatToPlain = (tree) => {
           name, type, value, oldValue, newValue, children,
         } = node;
 
-        const pathToKey = path.length !== 0 ? `${path}.${name}` : `${path}${name}`;
+        const pathToKey = `${path}${name}`;
 
         switch (type) {
           case 'deleted':
@@ -22,9 +22,9 @@ const formatToPlain = (tree) => {
           case 'unmodified':
             return `Property ${pathToKey} was unmodified with value: ${formatValue(value)}`;
           case 'nested':
-            return iter(children, pathToKey);
+            return iter(children, `${pathToKey}.`);
           default:
-            throw new Error('unexpected type');
+            throw new Error(`unexpected type: ${type}`);
         }
       });
     return `${formattedTree.join('\n')}`;
