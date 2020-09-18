@@ -1,41 +1,47 @@
 import _ from 'lodash';
 
-const formatObj = (obj, space) => {
-  const increaseSpace = 4;
-  const formattedObj = Object.entries(obj)
-    .map(([key, value]) => (`${' '.repeat(space + increaseSpace)}${key}: ${value}\n`));
-  return `{\n${formattedObj.join('\n')}${' '.repeat(space)}}`;
+const addIndent = (indent) => `${' '.repeat(indent)}`;
+
+const stringify = (values, space) => {
+  if (_.isObject(values)) {
+    const depth = 2;
+    const formattedObj = Object.entries(values)
+      .map(([key, value]) => (`${addIndent(space * depth)}${key}: ${stringify(value, space + depth)}\n`));
+    return `{\n${formattedObj.join('\n')}${addIndent(space + depth)}}`;
+  }
+  return values;
 };
-
-const addPrefix = (indent, symbol = '', prefix = '') => `${' '.repeat(indent)}${symbol}${prefix}`;
-
-const formatValue = (value, space) => (_.isObject(value) ? formatObj(value, space) : value);
 
 const formatToStylish = (tree) => {
   const iter = (data, depth) => {
     const indent = 2;
-    const space = depth === 1 ? depth * indent : depth * indent + indent;
+    const spaceCount = indent * depth;
+
     const formattedTree = data
       .map((node) => {
         const {
           name, type, value, oldValue, newValue, children,
         } = node;
+        const increaseSpaceCount = _.isObject(value) && depth === 1
+          ? spaceCount + indent
+          : spaceCount;
+
         switch (type) {
           case 'deleted':
-            return `${addPrefix(space, '-')} ${name}: ${formatValue(value, space + indent)}`;
+            return `${addIndent(spaceCount)}- ${name}: ${stringify(value, increaseSpaceCount)}`;
           case 'added':
-            return `${addPrefix(space, '+')} ${name}: ${formatValue(value, space + indent)}`;
+            return `${addIndent(spaceCount)}+ ${name}: ${stringify(value, increaseSpaceCount)}`;
           case 'modified':
-            return `${addPrefix(space, '-')} ${name}: ${formatValue(oldValue, space + indent)}\n${addPrefix(space, '+')} ${name}: ${formatValue(newValue, space + indent)}`;
+            return `${addIndent(spaceCount)}- ${name}: ${stringify(oldValue, spaceCount)}\n${addIndent(spaceCount)}+ ${name}: ${stringify(newValue, spaceCount)}`;
           case 'unmodified':
-            return `${addPrefix(space)}  ${name}: ${formatValue(value, space + indent)}`;
+            return `${addIndent(spaceCount)}  ${name}: ${stringify(value, spaceCount)}`;
           case 'nested':
-            return `${addPrefix(space)}  ${name}: ${iter(children, depth + 1)}`;
+            return `${addIndent(spaceCount)}  ${name}: ${iter(children, depth + 2)}`;
           default:
             throw new Error(`unexpected type: ${type}`);
         }
       });
-    return `{\n${formattedTree.join('\n')}\n${' '.repeat(space - indent)}}`;
+    return `{\n${formattedTree.join('\n')}\n${addIndent(spaceCount - indent)}}`;
   };
   return iter(tree, 1);
 };
