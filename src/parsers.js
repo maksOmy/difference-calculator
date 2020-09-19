@@ -2,10 +2,10 @@ import ini from 'ini';
 import yaml from 'js-yaml';
 import _ from 'lodash';
 
-const parsedToNum = (obj) => {
+const parseNum = (obj) => {
   const buildTree = _.mapValues(obj, (value) => {
     const numParse = Number.isNaN(parseFloat(value)) ? value : parseFloat(value);
-    return _.isObject(value) ? parsedToNum(value) : numParse;
+    return _.isObject(value) ? parseNum(value) : numParse;
   });
   return buildTree;
 };
@@ -16,7 +16,7 @@ const parse = (data, format) => {
       return yaml.safeLoad(data);
     case 'ini': {
       const parsedData = ini.parse(data);
-      return parsedToNum(parsedData);
+      return parseNum(parsedData);
     }
     case 'json':
       return JSON.parse(data);

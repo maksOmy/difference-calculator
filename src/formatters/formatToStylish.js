@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-const addIndent = (indent) => `${' '.repeat(indent)}`;
+const addIndent = (indent) => ' '.repeat(indent);
 
 const stringify = (values, space) => {
   if (_.isObject(values)) {
