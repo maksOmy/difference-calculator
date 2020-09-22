@@ -10,16 +10,25 @@ const readFile = (fileName) => fs.readFileSync(fileName, 'utf-8');
 
 const getFixturePath = (filename, fileType) => path.join(__dirname, '..', '__fixtures__', `${filename}.${fileType}`);
 
-const stylishExpected = readFile('__fixtures__/stylishResult.txt');
-const plainExpected = readFile('__fixtures__/plainResult.txt');
-const jsonExpected = readFile('__fixtures__/jsonResult.txt');
+let stylishExpected;
+let plainExpected;
+let jsonExpected;
+
+beforeAll(() => {
+  stylishExpected = readFile('__fixtures__/stylishResult.txt');
+  plainExpected = readFile('__fixtures__/plainResult.txt');
+  jsonExpected = readFile('__fixtures__/jsonResult.txt');
+});
 
 test.each([
-  ['json'],
-  ['yml'],
-  ['ini'],
+  'json',
+  'yml',
+  'ini',
 ])('allFormatDiff %#', (type) => {
-  expect(genDiff(getFixturePath('after', type), getFixturePath('before', type), 'stylish')).toEqual(stylishExpected);
-  expect(genDiff(getFixturePath('after', type), getFixturePath('before', type), 'plain')).toEqual(plainExpected);
-  expect(genDiff(getFixturePath('after', type), getFixturePath('before', type), 'json')).toEqual(jsonExpected);
+  const filePath1 = getFixturePath('after', type);
+  const filePath2 = getFixturePath('before', type);
+
+  expect(genDiff(filePath1, filePath2, 'stylish')).toEqual(stylishExpected);
+  expect(genDiff(filePath1, filePath2, 'plain')).toEqual(plainExpected);
+  expect(genDiff(filePath1, filePath2, 'json')).toEqual(jsonExpected);
 });

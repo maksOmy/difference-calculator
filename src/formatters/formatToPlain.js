@@ -20,14 +20,15 @@ const formatToPlain = (tree) => {
           case 'modified':
             return `Property ${pathToKey} was updated. From ${formatValue(oldValue)} to ${formatValue(newValue)}`;
           case 'unmodified':
-            return `Property ${pathToKey} was unmodified with value: ${formatValue(value)}`;
+            return null;
           case 'nested':
             return iter(children, `${pathToKey}.`);
           default:
             throw new Error(`unexpected type: ${type}`);
         }
       });
-    return `${formattedTree.join('\n')}`;
+      const formattedTreeWithoutNull = formattedTree.filter((str) => str !== null);
+    return formattedTreeWithoutNull.join('\n');
   };
   return iter(tree);
 };
