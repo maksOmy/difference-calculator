@@ -27,7 +27,7 @@ const formatToPlain = (tree) => {
             throw new Error(`unexpected type: ${type}`);
         }
       });
-      const formattedTreeWithoutNull = formattedTree.filter((str) => str !== null);
+    const formattedTreeWithoutNull = formattedTree.filter((str) => str !== null);
     return formattedTreeWithoutNull.join('\n');
   };
   return iter(tree);

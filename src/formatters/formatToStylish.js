@@ -15,14 +15,14 @@ const stringify = (values, space, depth) => {
   return `{\n${formattedObj.join('\n')}${addIndent(space * depth + space)}}`;
 };
 
-const formatToStylish = (tree) => {  
+const formatToStylish = (tree) => {
   const iter = (data, depth) => {
     const spaceCount = indent * depth;
     const formattedTree = data
       .map((node) => {
         const {
           name, type, value, oldValue, newValue, children,
-        } = node;        
+        } = node;
         switch (type) {
           case 'deleted':
             return `${addIndent(spaceCount)}- ${name}: ${stringify(value, indent, depth)}`;
