@@ -20,22 +20,19 @@ const formatToStylish = (tree) => {
     const spaceCount = indent * depth;
     const formattedTree = data
       .map((node) => {
-        const {
-          name, type, value, oldValue, newValue, children,
-        } = node;
-        switch (type) {
+        switch (node.type) {
           case 'deleted':
-            return `${addIndent(spaceCount)}- ${name}: ${stringify(value, indent, depth)}`;
+            return `${addIndent(spaceCount)}- ${node.name}: ${stringify(node.value, indent, depth)}`;
           case 'added':
-            return `${addIndent(spaceCount)}+ ${name}: ${stringify(value, indent, depth)}`;
+            return `${addIndent(spaceCount)}+ ${node.name}: ${stringify(node.value, indent, depth)}`;
           case 'modified':
-            return `${addIndent(spaceCount)}- ${name}: ${stringify(oldValue, indent, depth)}\n${addIndent(spaceCount)}+ ${name}: ${stringify(newValue, indent, depth)}`;
+            return `${addIndent(spaceCount)}- ${node.name}: ${stringify(node.oldValue, indent, depth)}\n${addIndent(spaceCount)}+ ${node.name}: ${stringify(node.newValue, indent, depth)}`;
           case 'unmodified':
-            return `${addIndent(spaceCount)}  ${name}: ${stringify(value, indent, depth)}`;
+            return `${addIndent(spaceCount)}  ${node.name}: ${stringify(node.value, indent, depth)}`;
           case 'nested':
-            return `${addIndent(spaceCount)}  ${name}: ${iter(children, depth + 2)}`;
+            return `${addIndent(spaceCount)}  ${node.name}: ${iter(node.children, depth + 2)}`;
           default:
-            throw new Error(`unexpected type: ${type}`);
+            throw new Error(`unexpected type: ${node.type}`);
         }
       });
     return `{\n${formattedTree.join('\n')}\n${addIndent(spaceCount - indent)}}`;

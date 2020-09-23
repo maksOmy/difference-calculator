@@ -6,25 +6,21 @@ const formatToPlain = (tree) => {
   const iter = (data, path = '') => {
     const formattedTree = data
       .map((node) => {
-        const {
-          name, type, value, oldValue, newValue, children,
-        } = node;
+        const pathToKey = `${path}${node.name}`;
 
-        const pathToKey = `${path}${name}`;
-
-        switch (type) {
+        switch (node.type) {
           case 'deleted':
             return `Property ${pathToKey} was removed`;
           case 'added':
-            return `Property ${pathToKey} was added with value: ${formatValue(value)}`;
+            return `Property ${pathToKey} was added with value: ${formatValue(node.value)}`;
           case 'modified':
-            return `Property ${pathToKey} was updated. From ${formatValue(oldValue)} to ${formatValue(newValue)}`;
+            return `Property ${pathToKey} was updated. From ${formatValue(node.oldValue)} to ${formatValue(node.newValue)}`;
           case 'unmodified':
             return null;
           case 'nested':
-            return iter(children, `${pathToKey}.`);
+            return iter(node.children, `${pathToKey}.`);
           default:
-            throw new Error(`unexpected type: ${type}`);
+            throw new Error(`unexpected type: ${node.type}`);
         }
       });
     const formattedTreeWithoutNull = formattedTree.filter((str) => str !== null);

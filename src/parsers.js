@@ -3,11 +3,11 @@ import yaml from 'js-yaml';
 import _ from 'lodash';
 
 const parseNum = (obj) => {
-  const buildTree = _.mapValues(obj, (value) => {
+  const tree = _.mapValues(obj, (value) => {
     const numParse = Number.isNaN(parseFloat(value)) ? value : parseFloat(value);
     return _.isObject(value) ? parseNum(value) : numParse;
   });
-  return buildTree;
+  return tree;
 };
 
 const parse = (data, format) => {
